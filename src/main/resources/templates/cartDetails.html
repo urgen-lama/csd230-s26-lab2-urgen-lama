@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Your Shopping Cart</title></head>
+<head>
+    <title>Your Shopping Cart</title>
+</head>
 <body>
+
 <h1>Your Shopping Cart</h1>
-<div th:if="${cart.products.empty}">
-    <p>Your cart is empty. <a th:href="@{/books}">Go shopping!</a></p>
+
+<!-- Empty Cart Message -->
+<div th:if="${#lists.isEmpty(cart.products)}">
+    <p>
+        Your cart is empty.
+        <a th:href="@{/books}">Go shopping!</a>
+    </p>
 </div>
 
-<table border="1" th:unless="${cart.products.empty}">
+<!-- Cart Table -->
+<table border="1" th:unless="${#lists.isEmpty(cart.products)}">
     <thead>
     <tr>
         <th>Item</th>
@@ -16,22 +25,51 @@
         <th>Action</th>
     </tr>
     </thead>
+
     <tbody>
-    <tr th:each="product : ${cart.products}">
+    <tr th:each="prod : ${cart.products}">
         <td>
-            <!-- Conditional rendering based on Class Type -->
-            <span th:if="${product instanceof T(csd230.s26.lab1.entities.PublicationEntity)}"
-                  th:text="${product.title}"></span>
-            <span th:if="${product instanceof T(csd230.s26.lab1.entities.TicketEntity)}"
-                  th:text="${product.description}"></span>
+            <div th:if="${prod.productType == 'BookEntity' or prod.productType == 'MagazineEntity'}">
+            </div>
         </td>
-        <td th:text="${product.productType}"></td>
-        <td th:text="${'$' + product.price}"></td>
-        <td><a th:href="@{/cart/remove/{id}(id=${product.id})}">Remove</a></td>
+
+        <td th:text="${prod.productType}"></td>
+
+        <td th:text="'$' + ${prod.price}"></td>
+
+        <td>
+            <a th:href="@{/cart/remove/{id}(id=${prod.id})}">
+                Remove
+            </a>
+        </td>
     </tr>
     </tbody>
+
+    <tfoot>
+    <tr>
+        <td colspan="2">
+            <strong>Total</strong>
+        </td>
+
+        <td colspan="2">
+            <strong th:text="'$' + ${cart.totalPrice}"></strong>
+        </td>
+    </tr>
+    </tfoot>
 </table>
+
 <br/>
+
+<!-- Checkout Button -->
+<form th:action="@{/cart/checkout}"
+      method="post"
+      th:unless="${#lists.isEmpty(cart.products)}">
+    <button type="submit">Checkout</button>
+</form>
+
+<br/>
+
 <a th:href="@{/books}">Back to Store</a>
+
 </body>
 </html>

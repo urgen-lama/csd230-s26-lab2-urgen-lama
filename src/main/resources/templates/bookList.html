@@ -4,8 +4,10 @@
 <body>
 <h1>Book List</h1>
 
-<!-- Add near the top -->
-<p><a th:href="@{/cart}">[ 🛒 View My Cart ]</a></p>
+<p>
+    <a th:href="@{/cart}">[ View My Cart ]</a> |
+    <a th:href="@{/magazines}">[ View Magazines ]</a>
+</p>
 
 <table border="1">
     <thead>
@@ -17,26 +19,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="book : ${books}"> <!-- the "th" is the thymeleaf -->
+    <tr th:each="book : ${books}">
         <td th:text="${book.title}"></td>
         <td th:text="${book.author}"></td>
         <td th:text="${book.price}"></td>
         <td>
-            <!-- Link to Edit, passing the specific book ID -->
             <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a> |
-
-            <a th:href="@{/books/delete/{id}(id=${book.id})}"
-               onclick="return confirm('Are you sure?')">Delete</a>
+            <a th:href="@{/books/delete/{id}(id=${book.id})}" onclick="return confirm('Are you sure?')">Delete</a>
         </td>
-
-        <!-- Inside the table <tbody> actions column -->
         <td>
             <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a> |
             <a th:href="@{/books/delete/{id}(id=${book.id})}" onclick="return confirm('Delete?')">Delete</a> |
             <strong><a th:href="@{/cart/add/{id}(id=${book.id})}">Add to Cart</a></strong>
         </td>
-
-
     </tr>
     </tbody>
 </table>

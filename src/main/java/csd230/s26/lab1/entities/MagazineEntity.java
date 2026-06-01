@@ -22,7 +22,6 @@ public class MagazineEntity extends PublicationEntity {
         this.currentIssue = currentIssue;
     }
 
-    // Getters and Setters
     public int getOrderQty() { return orderQty; }
     public void setOrderQty(int orderQty) { this.orderQty = orderQty; }
 
@@ -53,6 +52,5 @@ public class MagazineEntity extends PublicationEntity {
     @Override
     public void sellItem() {
         System.out.println("Selling Magazine");
-
     }
 }

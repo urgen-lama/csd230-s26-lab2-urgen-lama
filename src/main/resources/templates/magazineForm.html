@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Magazine Form</title></head>
+<body>
+<h1 th:text="${magazine.id == null} ? 'Add New Magazine' : 'Edit Magazine'">Magazine Form</h1>
+
+<form th:action="@{/magazines/save}" th:object="${magazine}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Title: <input type="text" th:field="*{title}" required /></label><br/><br/>
+    <label>Price: <input type="number" step="0.01" th:field="*{price}" required /></label><br/><br/>
+    <label>Copies: <input type="number" th:field="*{copies}" required /></label><br/><br/>
+    <label>Order Qty: <input type="number" th:field="*{orderQty}" required /></label><br/><br/>
+    <label>Current Issue: <input type="datetime-local" th:field="*{currentIssue}" required /></label><br/><br/>
+
+    <button type="submit">Save</button>
+    <a href="/magazines">Cancel</a>
+</form>
+</body>
+</html>

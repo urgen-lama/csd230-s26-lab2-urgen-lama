@@ -35,7 +35,7 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     public String getProductId() { return productId; }
     public void setProductId(String productId) { this.productId = productId; }
 
-    public double getPrice() { return price; }
+    public double getPrice() { return price != null ? price : 0.0; }
     public void setPrice(Double price) { this.price = price; }
 
     // This allows Thymeleaf to access "${product.productType}"
